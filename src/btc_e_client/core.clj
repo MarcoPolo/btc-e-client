@@ -6,8 +6,8 @@
             [org.httpkit.client :as http]
             clojure.walk))
 
-(def secret (System/getenv "BTC_SECRET"))
-(def api-key (System/getenv "BTC_KEY"))
+(def secret atom "")
+(def api-key atom "")
 
 (def endpoint "https://btc-e.com/tapi")
 

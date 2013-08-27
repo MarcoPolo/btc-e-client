@@ -9,6 +9,10 @@ Example
 ```
   (require '[btc-e-client.core :as btce]) ;; load the library
 
+  ;; Set your api key and secret
+  (reset! btce/secret "your-secret")
+  (reset! btce/api-key "your-api-key")
+
   (btce/get-ticker) ;; Get the ticker
 
   (get-in (btce/get-ticker) [:ticker :avg]) ;; Get the average
