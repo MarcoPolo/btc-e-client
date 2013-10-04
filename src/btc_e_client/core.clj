@@ -92,21 +92,33 @@
 ;; Demo
 (comment
 
-  (require '[btc-e-client.core :as btce]) ;; load the library
+  ;; load the library
+  (require '[btc-e-client.core :as btce])
 
-  (btce/get-ticker) ;; Get the ticker
+  (def api (btce/init :btc_usd "mysecret" "mykey"))
+
+  (btce/get-ticker api) ;; Get the ticker
+  (btce/get-ticker) ;; By default public api methods use btc_usd
 
   (get-in (btce/get-ticker) [:ticker :avg]) ;; Get the average
 
   (btce/get-trades) ;; get the trades
 
-  ;; The trade api's method names and params can be found at https://btc-e.com/api/documentation
+  ;; The trade api's method names and params can be found at
+  ;; https://btc-e.com/api/documentation
+  ;;
+  ;; trade-api-request and async-trade-api-request must take in an api, since
+  ;; they need the api key/secret
 
-  (btce/trade-api-request "TradeHistory") ;; Play around with the trade api
-  (btce/trade-api-request "getInfo") ;; Get the user's Info
+  ;; Play around with the trade api
+  (btce/trade-api-request api "TradeHistory")
 
-  (btce/trade-api-request "CancelOrder" {:order_id 123}) ;; Cancel an order with an argument
+  ;; Get the user's Info
+  (btce/trade-api-request api "getInfo")
 
-  )
+  ;; Cancel an order with an argument
+  (btce/trade-api-request api "CancelOrder" {:order_id 123})
+
+)
 
 
