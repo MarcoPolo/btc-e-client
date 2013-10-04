@@ -20,7 +20,7 @@
 
 (defn- public-api
   [api endpt]
-  (str "https://btc-e.com/api/2/" (:curr api) "/" (name endpt)))
+  (str "https://btc-e.com/api/2/" (name (:curr api)) "/" (name endpt)))
 
 (defn- get-body-sync [url]
   (json/read-str (:body @(http/get url)) :key-fn keyword))
@@ -86,7 +86,7 @@
     (json/read-str
       (:body @(async-trade-api-request api method-name params))
       :key-fn keyword))
-  ([method-name]
+  ([api method-name]
    (trade-api-request api method-name {})))
 
 ;; Demo
