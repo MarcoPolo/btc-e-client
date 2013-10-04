@@ -1,35 +1,49 @@
 # btc-e-client
 
-A small client for interacting with the btc-e api. Works for the public and trading api.
-
+A small client for interacting with the btc-e api. Works for the public and
+trading api.
 
 ## Usage
 
 Example
+```clojure
+;; load the library
+(require '[btc-e-client.core :as btce])
+
+;; instantiate your api information
+(def api (btce/init :btc_usd "mysecret" "mykey"))
+
+(btce/get-ticker api) ;; Get the ticker
+(btce/get-ticker) ;; By default public api methods use btc_usd
+
+(get-in (btce/get-ticker) [:ticker :avg]) ;; Get the average
+
+(btce/get-trades) ;; get the trades
+
+;; The trade api's method names and params can be found at
+;; https://btc-e.com/api/documentation
+;;
+;; trade-api-request and async-trade-api-request must take in an api, since
+;; they need the api key/secret
+
+;; Play around with the trade api
+(btce/trade-api-request api "TradeHistory")
+
+;; Get the user's Info
+(btce/trade-api-request api "getInfo")
+
+;; Cancel an order with an argument
+(btce/trade-api-request api "CancelOrder" {:order_id 123})
+
 ```
-  (require '[btc-e-client.core :as btce]) ;; load the library
 
-  ;; Set your api key and secret
-  (reset! btce/secret "your-secret")
-  (reset! btce/api-key "your-api-key")
+Functions:
+```clojure
+;; Init
+(init :ltc_usd "mysecret" "mykey")
 
-  (btce/get-ticker) ;; Get the ticker
+;; secret and key can be ommitted if only using public methods
 
-  (get-in (btce/get-ticker) [:ticker :avg]) ;; Get the average
-
-  (btce/get-trades) ;; get the trades
-
-  ;; The trade api's method names and params can be found at https://btc-e.com/api/documentation
-
-  (btce/trade-api-request "TradeHistory") ;; Play around with the trade api
-  (btce/trade-api-request "getInfo") ;; Get the user's Info
-
-  (btce/trade-api-request "CancelOrder" {:order_id 123}) ;; Cancel an order with an argument
-
-```
-
-Functions: 
-```
 ;; Public api functions
 (get-ticker)
 (get-trades)
@@ -39,20 +53,10 @@ Functions:
 ;;Trade api functions
 (trade-api-request method-name params?)
 
-(async-trade-api-request method-name params?) ;;returns a promise to a response
+;;returns a promise to a response
+(async-trade-api-request method-name params?)
 
 ```
-
-Other api endpoints: Only the btc_usd is used in the public-api calls. You can however call any route you want with
-```
-(get-body-sync url)
-
-;; Example get the ltc_usd ticker
-
-(require '[btc-e-client.core :as btce]) ;; load the library
-(btce/get-body-sync "https://btc-e.com/api/2/ltc_usd/ticker")
-```
-
 
 ## License
 
