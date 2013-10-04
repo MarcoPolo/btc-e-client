@@ -14,6 +14,8 @@
   [currency secret api-key ]
   { :curr currency :secret secret :key api-key})
 
+(def default-api (init :btc_usd "" ""))
+
 (def endpoint "https://btc-e.com/tapi")
 
 (defn- public-api
@@ -23,13 +25,21 @@
 (defn- get-body-sync [url]
   (json/read-str (:body @(http/get url)) :key-fn keyword))
 
-(defn get-ticker [api] (get-body-sync (public-api api :ticker)))
+(defn get-ticker
+  ([] (get-ticker default-api))
+  ([api] (get-body-sync (public-api api :ticker))))
 
-(defn get-trades [api] (get-body-sync (public-api api :trades)))
+(defn get-trades
+  ([] (get-trades default-api))
+  ([api] (get-body-sync (public-api api :trades))))
 
-(defn get-fee [api] (get-body-sync (public-api api :fee)))
+(defn get-fee
+  ([] (get-fee default-api))
+  ([api] (get-body-sync (public-api api :fee))))
 
-(defn get-depth [api] (get-body-sync (public-api api :fee)))
+(defn get-depth
+  ([] (get-depth default-api))
+  ([api] (get-body-sync (public-api api :depth))))
 
 ;; This is how their api works
 
