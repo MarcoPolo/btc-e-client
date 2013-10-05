@@ -1,4 +1,4 @@
-(defproject btc-e-client "0.1.0"
+(defproject btc-e-client "0.2.0"
   :description "Small btc-e client library"
   :url "https://github.com/MarcoPolo/btc-e-client"
   :license {:name "Eclipse Public License"
